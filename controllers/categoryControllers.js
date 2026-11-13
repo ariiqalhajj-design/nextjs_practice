@@ -1,4 +1,6 @@
 exports.getAllCategories = (req, res) => {
+  //menampilkan waktu request
+  console.log('request time:', req.requestTime);
   res.json({
     message: "Welcome to the categories route!",
     data: [

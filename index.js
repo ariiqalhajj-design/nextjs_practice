@@ -1,10 +1,26 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
+const dotenv = require('dotenv');
+const cosrs = require('cors');
 const categoriesRouter = require('./routes/categories');
-app.use(express.json());
+
+dotenv.config();
+app.use(cosrs());
 
 //middleware
+app.use(express.json());
+
+app.use((req, res, next) => {
+    req.requestTime = new Date().toISOString();
+
+    console.log(`Request received at: ${req.requestTime}`);
+    console.log(`Request method: ${req.method}`);
+    console.log(`Request URL: ${req.originalUrl}`);
+
+    next();
+});
+
+const port = process.env.PORT;
 app.use('/categories', categoriesRouter);
 
 app.listen(PORT, () => {
