@@ -10,14 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      this.belongsTo(models.Menu, { foreignKey: 'menu_id' });
+      this.belongsTo(models.order, { foreignKey: 'order_id' });
       // define association here
     }
   }
   OrderDetail.init({
     menu_id: DataTypes.INTEGER,
     order_id: DataTypes.INTEGER,
-    qty: DataTypes.INTEGER,
-    subtotal: DataTypes.INTEGER
+    qty: { type: DataTypes.INTEGER, validate: { min: 1 } },
+    subtotal: DataTypes.INTEGER,validate: { min: 0 }
   }, {
     sequelize,
     modelName: 'OrderDetail',
