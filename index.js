@@ -20,9 +20,9 @@ app.use((req, res, next) => {
     next();
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 app.use('/categories', categoriesRouter);
 
-app.listen(PORT, () => {
-    console.log(`Server is running http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`Server is running http://localhost:${port}`);
 });

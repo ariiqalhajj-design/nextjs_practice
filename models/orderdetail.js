@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     menu_id: DataTypes.INTEGER,
     order_id: DataTypes.INTEGER,
     qty: { type: DataTypes.INTEGER, validate: { min: 1 } },
-    subtotal: DataTypes.INTEGER,validate: { min: 0 }
+    subtotal: {type: DataTypes.INTEGER,validate: { min: 0 }}
   }, {
     sequelize,
     modelName: 'OrderDetail',

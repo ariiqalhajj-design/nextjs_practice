@@ -1,6 +1,8 @@
+const { Category } = require("../models");
+
 exports.getAllCategories = (req, res) => {
   //menampilkan waktu request
-  console.log('request time:', req.requestTime);
+  console.log("request time:", req.requestTime);
   res.json({
     message: "Welcome to the categories route!",
     data: [
@@ -11,21 +13,22 @@ exports.getAllCategories = (req, res) => {
   });
 };
 
-exports.storCategoryByName = (req, res) => {
-  let name = req.body.name;
-  let description = req.body.description;
+exports.storCategoryByName = async (req, res) => {
+  const { name, description } = req.body;
+  try {
+    const newCategory = await Category.create({
+      nama: name,
+      deskripsi: description,
+    });
 
-  if (!name && !description) {
-    return res
-      .status(400)
-      .json({ message: "Name and description are required" });
+    return res.status(201).json({
+      status: "Category created successfully",
+      data: newCategory,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: "Failed to create category",
+      message: error.message,
+    });
   }
-  return res.status(200).json({
-    data: {
-      name: name,
-      description: description,
-    },
-    status: "success",
-    massage: "Category created successfully",
-  });
 };
